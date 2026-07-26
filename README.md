@@ -1,16 +1,16 @@
 # Navelia Agent
 
-LangChain function-calling ReAct agents for patient intake.
+LangChain function-calling ReAct agents for patient intake, CSV writing, review, and PDF export.
 
 ## Architecture
 
 - `FillingReActAgent`
-  - Uses OpenAI-compatible function-calling tools through the model `tools` field.
+  - Sends tools through the OpenAI-compatible `tools` request field via LangChain `bind_tools(...)`.
   - Tools: `read_patient_record`, `update_patient_field`.
   - Asks the patient for missing information and writes fields into CSV.
 
 - `ReviewReActAgent`
-  - Uses OpenAI-compatible function-calling tools through the model `tools` field.
+  - Sends tools through the OpenAI-compatible `tools` request field via LangChain `bind_tools(...)`.
   - Tools: `read_patient_record`, `export_patient_pdf`.
   - Reviews required fields and exports PDF when complete.
 
@@ -31,9 +31,23 @@ python -m pip install -r requirements.txt
 
 ## Run
 
+Start a new patient intake and show tool-call traces:
+
 ```powershell
 python main.py --reset
 ```
+
+Run without tool-call trace output:
+
+```powershell
+python main.py --reset --quiet-tools
+```
+
+During the CLI session:
+
+- `status` or `状态`: show current case table
+- `help` or `?`: show help
+- `exit`, `quit`, or `q`: exit
 
 Outputs:
 
